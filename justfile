@@ -1,6 +1,6 @@
 package_dir := "src"
 
-_py *args:
+py *args:
     uv run {{args}}
 
 help:
@@ -10,7 +10,7 @@ install:
     uv run pre-commit install && uv sync --all-extras --all-groups
 
 lint:
-    just _py pre-commit run --all-files
+    just py pre-commit run --all-files
 
 test *args:
-    just _py pytest {{args}}
+    just py pytest {{args}}

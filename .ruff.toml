@@ -15,6 +15,7 @@ exclude = [
 ignore = [
     "A003", # Python builtin is shadowed by class attribute {name} from {row}
     "B008", # Do not perform function call {name} in argument defaults
+    "B024", # Class is an abstract base class, but it has no abstract methods
     "D100", # Missing docstring in public module
     "D101", # Missing docstring in public class
     "D102", # Missing docstring in public method
@@ -25,6 +26,7 @@ ignore = [
     "S101", # Use of `assert` detected
     "ANN101", # Missing type annotation for `self` in method
     "ANN102", # Missing type annotation for `cls` in classmethod
+    "ANN204", # Missing return type annotation for special method `__init__`
 ]
 
 [lint.isort]
