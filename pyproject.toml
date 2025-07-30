@@ -14,4 +14,21 @@ maintainers = [
     { name = "eumozge", email = "eumozge@gmail.com" },
 ]
 
-dependencies = []
+dependencies = [
+]
+
+[dependency-groups]
+dev = ["pre-commit"]
+test = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-clarity>=1.0.1",
+    "pytest-cov>=6.2.1",
+    "pytest-sugar>=1.0.0",
+    "pytest-xdist>=3.8.0",
+]
+lint = [
+    "mypy",
+    "ruff",
+    "pylint",
+]
