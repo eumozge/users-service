@@ -31,3 +31,17 @@ lint = [
     "mypy",
     "ruff",
 ]
+
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+python_files = [
+    "tests.py",
+    "test_*.py",
+]
+addopts = [
+    "-vv",
+    "-s",
+    "--color=yes",
+    "--tb=auto",
+]
