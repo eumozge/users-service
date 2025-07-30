@@ -1,14 +1,15 @@
 from abc import ABC
+from dataclasses import dataclass, field
 
-from users.domain.common.events import Event
+from domain.common.events import Event
 
 
+@dataclass(eq=False)
 class BaseService(ABC):
-    def __init__(self):
-        self._events: list[Event] = []
+    events: list[Event] = field(kw_only=True, default_factory=list)
 
     def register_event(self, event: Event) -> None:
-        self._events.append(event)
+        self.events.append(event)
 
     def get_events(self) -> list[Event]:
-        return self._events
+        return self.events

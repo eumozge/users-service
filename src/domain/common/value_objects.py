@@ -7,7 +7,7 @@ V = TypeVar("V", bound=Any)
 
 @dataclass(frozen=True)
 class BaseValueObject(ABC):
-    def __post_init(self) -> None:
+    def __post_init__(self) -> None:
         self.validate()
 
     @abstractmethod
