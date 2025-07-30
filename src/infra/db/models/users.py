@@ -7,7 +7,7 @@ from infra.db.models.base import BaseModel
 from sqlalchemy.orm import Mapped, mapped_column
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     __tablename__ = "users"
 
     id: Mapped[value_objects.UserId] = mapped_column(

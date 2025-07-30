@@ -9,7 +9,6 @@ py *args:
 help:
     just -l
 
-
 install:
     uv run pre-commit install && uv sync --all-extras --all-groups && export PYTHONPATH=$PYTHONPATH:$(pwd)/src
 
@@ -19,6 +18,11 @@ lint:
 test *args:
     just py pytest {{args}}
 
+migrations-make message="":
+    uv run alembic revision --autogenerate -m "{{message}}"
+
+migrations-apply:
+    uv run alembic upgrade head
 
 storages:
     docker compose -f {{STORAGES}} {{ENV}} -p {{ PROJECT_NAME }} up -d --remove-orphans

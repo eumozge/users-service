@@ -14,7 +14,13 @@ maintainers = [
     { name = "eumozge", email = "eumozge@gmail.com" },
 ]
 
+packages = [
+    { include = "", from = "src" },
+]
+
 dependencies = [
+    "alembic>=1.16.4",
+    "asyncpg>=0.30.0",
     "pydantic>=2.11.7",
     "pydantic-settings>=2.10.1",
     "sqlalchemy>=2.0.42",

@@ -12,6 +12,7 @@ exclude = [
     "build",
     "docs",
 ]
+
 ignore = [
     "A003", # Python builtin is shadowed by class attribute {name} from {row}
     "B008", # Do not perform function call {name} in argument defaults

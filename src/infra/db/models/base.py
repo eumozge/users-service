@@ -1,5 +1,5 @@
 from sqlalchemy import MetaData
-from sqlalchemy.orm import DeclarativeBase, registry
+from sqlalchemy.orm import DeclarativeBase
 
 convention = {
     "ix": "ix_%(column_0_label)s",
@@ -10,9 +10,5 @@ convention = {
 }
 
 
-mapper_registry = registry(metadata=MetaData(naming_convention=convention))
-
-
 class BaseModel(DeclarativeBase):
-    registry = mapper_registry
-    metadata = mapper_registry.metadata
+    metadata = MetaData(naming_convention=convention)

@@ -1,4 +1,4 @@
-from pydantic import Field, SecretStr
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -13,7 +13,7 @@ class PostgresSettings(BaseSettings):
     port: int = 5432
     name: str = "postgres"
     user: str = "postgres"
-    password: SecretStr = Field(..., min_length=1)
+    password: str = Field(..., min_length=1)
 
     @property
     def asyncurl(self) -> str:
