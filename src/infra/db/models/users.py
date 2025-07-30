@@ -14,7 +14,6 @@ class UserModel(BaseModel):
         sa.UUID,
         primary_key=True,
         default=uuid4,
-        server_default=sa.func.uuid_generate_v4(),
     )
     username: Mapped[value_objects.Username] = mapped_column(sa.String, unique=True)
     created_at: Mapped[datetime] = mapped_column(nullable=False, server_default=sa.sql.func.now())

@@ -27,7 +27,8 @@ ignore = [
     "S101", # Use of `assert` detected
     "ANN101", # Missing type annotation for `self` in method
     "ANN102", # Missing type annotation for `cls` in classmethod
-    "ANN204", # Missing return type annotation for special method `__init__`
+    "ANN204", # Missing return type annotation for special method `__init__`,
+    "N999", # Invalid module name
 ]
 
 [lint.isort]
