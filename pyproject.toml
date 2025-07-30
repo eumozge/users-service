@@ -1,0 +1,17 @@
+[project]
+name = "example-service"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.12"
+
+license = {file = "LICENSE.md"}
+
+authors = [
+    { name = "eumozge", email = "eumozge@gmail.com" },
+]
+maintainers = [
+    { name = "eumozge", email = "eumozge@gmail.com" },
+]
+
+dependencies = []
