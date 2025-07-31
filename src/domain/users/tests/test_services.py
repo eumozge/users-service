@@ -8,7 +8,6 @@ from domain.users.value_objects.user_id import UserId
 from domain.users.value_objects.username import Username
 
 
-@pytest.mark.asyncio()
 class TestUserService:
     @pytest.fixture()
     def service(self) -> UserService:
