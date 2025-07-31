@@ -11,17 +11,17 @@ class PostgresSettings(BaseSettings):
     )
     host: str = "localhost"
     port: int = 5432
-    name: str = "postgres"
+    db: str = "postgres"
     user: str = "postgres"
     password: str = Field(..., min_length=1)
 
     @property
     def asyncurl(self) -> str:
-        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"
 
     @property
     def syncurl(self) -> str:
-        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"
 
 
 class Settings(BaseSettings):
