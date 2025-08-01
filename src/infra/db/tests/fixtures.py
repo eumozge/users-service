@@ -1,10 +1,13 @@
 from collections.abc import AsyncGenerator
 
 import pytest
+from domain.users import entities
+from domain.users.value_objects.user_id import UserId
+from domain.users.value_objects.username import Username
 from infra.db.main import get_sa_engine, get_sa_session_maker
 from infra.db.models.base import BaseModel
-from infra.db.tests.factories import AsyncSQLAlchemyModelFactory
-from infra.settings import settings
+from infra.db.tests.factories import AsyncSQLAlchemyModelFactory, UserFactory
+from settings import settings
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 
@@ -32,4 +35,10 @@ async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
 @pytest.fixture(autouse=True)
 async def _factories(session: AsyncSession) -> None:
     for cls in AsyncSQLAlchemyModelFactory.__subclasses__():
-        cls._meta.sqlalchemy_session = session
+        cls._meta.__dict__["sqlalchemy_session"] = session
+
+
+@pytest.fixture()
+async def user() -> entities.User:
+    user = UserFactory()
+    return entities.User(id=UserId(user.id), username=Username(user.username))

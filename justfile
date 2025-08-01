@@ -11,7 +11,7 @@ help:
     just -l
 
 install:
-    uv run pre-commit install && uv sync --all-extras --all-groups && export PYTHONPATH=$PYTHONPATH:$(pwd)/src
+    uv run pre-commit install && uv sync --all-extras --all-groups && export PYTHONPATH=$(pwd)/src
 
 lint:
     just py pre-commit run --all-files
