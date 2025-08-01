@@ -12,4 +12,4 @@ def get_paths(file_name: str) -> list[str]:
     ]
 
 
-pytest_plugins = get_paths("fixtures")
+pytest_plugins = get_paths("fixtures") + get_paths("factories")

@@ -3,6 +3,7 @@ from collections.abc import AsyncGenerator
 import pytest
 from infra.db.main import get_sa_engine, get_sa_session_maker
 from infra.db.models.base import BaseModel
+from infra.db.tests.factories import AsyncSQLAlchemyModelFactory
 from infra.settings import settings
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
@@ -26,3 +27,9 @@ async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
 
     async with async_session() as session:
         yield session
+
+
+@pytest.fixture(autouse=True)
+async def _factories(session: AsyncSession) -> None:
+    for cls in AsyncSQLAlchemyModelFactory.__subclasses__():
+        cls._meta.sqlalchemy_session = session
