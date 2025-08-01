@@ -25,12 +25,13 @@ ignore = [
     "D105", # Missing docstring in magic method
     "D106", # Missing docstring in public nested class
     "D107", # Missing docstring in `__init__`
+    "N999", # Invalid module name
     "S101", # Use of `assert` detected
     "ANN101", # Missing type annotation for `self` in method
     "ANN102", # Missing type annotation for `cls` in classmethod
     "ANN204", # Missing return type annotation for special method `__init__`,
     "ANN401", # Dynamically typed expressions (typing.Any) are disallowed in `*args` and `**kwargs`
-    "N999", # Invalid module name
+    "FBT001", # Boolean-typed positional argument in function definition
 ]
 
 [lint.isort]

@@ -1,3 +1,4 @@
+API := "src"
 STORAGES := "dockercompose/dev.storages.yaml"
 PROJECT_NAME := "users_service"
 
@@ -32,3 +33,6 @@ storages-logs:
 
 storages-down:
 	docker compose -f {{STORAGES}} {{ENV}} -p {{ PROJECT_NAME }} down
+
+up:
+	uv run python {{API}}

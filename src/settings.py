@@ -2,7 +2,7 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class PostgresSettings(BaseSettings):
+class DBSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -13,7 +13,7 @@ class PostgresSettings(BaseSettings):
     port: int = 5432
     db: str = "postgres"
     user: str = "postgres"
-    password: str = Field(..., min_length=1)
+    password: str = "password"
 
     @property
     def asyncurl(self) -> str:
@@ -24,9 +24,24 @@ class PostgresSettings(BaseSettings):
         return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"
 
 
+class APISettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_prefix="API_",
+        extra="ignore",
+    )
+    host: str = "localhost"
+    port: int = 8000
+    debug: bool = __debug__
+
+
 class Settings(BaseSettings):
-    db: PostgresSettings = Field(
-        default_factory=lambda: PostgresSettings(),
+    db: DBSettings = Field(
+        default_factory=lambda: DBSettings(),
+    )
+    api: APISettings = Field(
+        default_factory=lambda: APISettings(),
     )
 
 
