@@ -3,12 +3,15 @@ import logging
 
 from api.main import init, run
 from infra.db.main import get_sa_engine
+from infra.logs.main import configure_logging
 from settings import settings
 
 logger = logging.getLogger(__name__)
 
 
 async def async_main() -> None:
+    configure_logging(settings=settings.logs)
+
     logger.info("Launch app")
     app = init()
 

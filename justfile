@@ -34,5 +34,5 @@ storages-logs:
 storages-down:
 	docker compose -f {{STORAGES}} {{ENV}} -p {{ PROJECT_NAME }} down
 
-up:
+api:
 	uv run python {{API}}

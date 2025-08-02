@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -36,12 +38,26 @@ class APISettings(BaseSettings):
     debug: bool = __debug__
 
 
+class LogSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_prefix="LOG_",
+        extra="ignore",
+    )
+    path: Path = Path("users.log")
+    level: str = "DEBUG"
+
+
 class Settings(BaseSettings):
     db: DBSettings = Field(
         default_factory=lambda: DBSettings(),
     )
     api: APISettings = Field(
         default_factory=lambda: APISettings(),
+    )
+    logs: LogSettings = Field(
+        default_factory=lambda: LogSettings(),
     )
 
 
