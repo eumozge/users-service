@@ -38,6 +38,19 @@ class APISettings(BaseSettings):
     debug: bool = __debug__
 
 
+class MessageBrokerSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        env_prefix="RABBITMQ_",
+        extra="ignore",
+    )
+    host: str = "localhost"
+    port: int = 5672
+    login: str = "admin"
+    password: str = "admin"
+
+
 class LogSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -50,15 +63,10 @@ class LogSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    db: DBSettings = Field(
-        default_factory=lambda: DBSettings(),
-    )
-    api: APISettings = Field(
-        default_factory=lambda: APISettings(),
-    )
-    logs: LogSettings = Field(
-        default_factory=lambda: LogSettings(),
-    )
+    db: DBSettings = Field(default_factory=lambda: DBSettings())
+    api: APISettings = Field(default_factory=lambda: APISettings())
+    message_broker: MessageBrokerSettings = Field(default_factory=lambda: MessageBrokerSettings())
+    logs: LogSettings = Field(default_factory=lambda: LogSettings())
 
 
 settings = Settings()

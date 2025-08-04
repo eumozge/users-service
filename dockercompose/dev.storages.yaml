@@ -3,8 +3,8 @@ volumes:
 
 services:
   postgres:
-    image: postgres:17
-    container_name: users_service_postgres
+    image: postgres:17-alpine
+    container_name: users.postgres
     env_file:
       - ../.env
     environment:
@@ -19,6 +19,24 @@ services:
       - ./postgres/initdb.d:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    container_name: users.rabbitmq
+    env_file:
+      - ../.env
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_MONITORING_PORT}:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-admin}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-admin}
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics check_running -q"]
       interval: 10s
       timeout: 60s
       retries: 5
