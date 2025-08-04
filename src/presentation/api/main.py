@@ -1,10 +1,10 @@
 import logging
 
 import uvicorn
-from api.controllers.main import setup_controllers
-from api.middlewares.main import setup_middlewares
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from presentation.api.controllers.main import setup_controllers
+from presentation.api.middlewares.main import setup_middlewares
 from settings import settings
 
 logger = logging.getLogger()

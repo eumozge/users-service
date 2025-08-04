@@ -2,9 +2,9 @@ from collections.abc import AsyncGenerator, Callable
 from typing import Any
 
 import pytest
-from api.main import init
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
+from presentation.api.main import init
 
 Resolver = Callable[[str], str]
 

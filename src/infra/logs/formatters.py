@@ -4,7 +4,6 @@ from typing import Any
 from uuid import UUID
 
 import orjson
-from api.middlewares.logs import get_request_id
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +18,9 @@ def additionally_serialize(obj: object) -> Any:
 
 class OrjsonFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
+        """TODO Configurate request id on api layer."""
+        from presentation.api.middlewares.logs import get_request_id
+
         payload = {
             "timestamp": self.formatTime(record, self.datefmt),
             "level": record.levelname,
