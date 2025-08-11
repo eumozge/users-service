@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 import aio_pika
 from aio_pika.pool import Pool
-from infra.message_brokers.factories import ChannelFactory, ConnectionFactory
+from infra.message_broker.factories import ChannelFactory, ConnectionFactory
 from settings import MessageBrokerSettings
 
 

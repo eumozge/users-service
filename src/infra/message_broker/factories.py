@@ -1,7 +1,7 @@
 import aio_pika
 from aio_pika.abc import AbstractRobustConnection
 from aio_pika.pool import Pool
-from infra.message_brokers.exceptions import MessageBrokerError
+from infra.message_broker.exceptions import MessageBrokerError
 from settings import MessageBrokerSettings
 
 

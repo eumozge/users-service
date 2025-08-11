@@ -15,3 +15,7 @@ class CommitError(ApplicationError):
 
 class RollbackError(ApplicationError):
     pass
+
+
+class MappingError(ApplicationError):
+    pass

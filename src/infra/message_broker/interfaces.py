@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from mailbox import Message
+
+from infra.message_broker.messages import Message
 
 
 class MessageBroker(ABC):

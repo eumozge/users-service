@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from infra.db.main import get_sa_engine
-from infra.logs.main import configure_logging
+from infra.log.main import configure_logging
 from presentation.api.main import init, run
 from settings import settings
 
