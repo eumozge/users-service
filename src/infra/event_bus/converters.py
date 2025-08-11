@@ -1,11 +1,7 @@
-from typing import TypeAlias
-
 from app.common.exceptions import MappingError
+from domain.common.events import Event
 from domain.users.events import UserCreated
 from infra.event_bus import events as integration_events
-
-# Define a union type for all possible domain events
-DomainEvent: TypeAlias = UserCreated
 
 
 def convert_user_created_to_integration(
@@ -18,7 +14,7 @@ def convert_user_created_to_integration(
 
 
 def convert_domain_event_to_integration(
-    event: DomainEvent,
+    event: Event,
 ) -> integration_events.IntegrationEvent:
     if isinstance(event, UserCreated):
         return convert_user_created_to_integration(event)

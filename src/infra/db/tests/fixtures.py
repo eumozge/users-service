@@ -6,6 +6,7 @@ from domain.users.value_objects.user_id import UserId
 from domain.users.value_objects.username import Username
 from infra.db.main import get_sa_engine, get_sa_session_maker
 from infra.db.models.base import BaseModel
+from infra.db.repositories.users import UserRepositoryImpl
 from infra.db.tests.factories import AsyncSQLAlchemyModelFactory, UserFactory
 from settings import settings
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
@@ -36,6 +37,11 @@ async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
 async def _factories(session: AsyncSession) -> None:
     for cls in AsyncSQLAlchemyModelFactory.__subclasses__():
         cls._meta.__dict__["sqlalchemy_session"] = session
+
+
+@pytest.fixture()
+async def user_repository(session: AsyncSession) -> UserRepositoryImpl:
+    return UserRepositoryImpl(session)
 
 
 @pytest.fixture()
