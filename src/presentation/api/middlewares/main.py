@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from presentation.api.middlewares.logs import set_request_id_middleware
+from presentation.api.middlewares.jsonlog import set_request_id_middleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
 

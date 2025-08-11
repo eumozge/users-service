@@ -1,6 +1,6 @@
 import logging
-from dataclasses import dataclass
-from uuid import UUID
+from dataclasses import dataclass, field
+from uuid import UUID, uuid4
 
 from app.common.commands import Command, CommandHandler
 from app.common.interfaces import UnitOfWork
@@ -10,9 +10,9 @@ from domain.users.value_objects import UserId, Username
 logger = logging.getLogger(__name__)
 
 
-@dataclass(eq=False, frozen=True)
+@dataclass(eq=False, frozen=True, kw_only=True)
 class CreateUser(Command):
-    user_id: UUID
+    user_id: UUID = field(default_factory=uuid4)
     username: str
 
 

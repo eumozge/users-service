@@ -11,7 +11,7 @@ def configure_logging(settings: LogSettings) -> None:
             "default": {
                 "format": "%(asctime)s [%(levelname)-8s] %(name)-20s | %(message)s",
             },
-            "json": {"()": "infra.logs.formatters.OrjsonFormatter"},
+            "json": {"()": "infra.log.formatters.OrjsonFormatter"},
         },
         "handlers": {
             "console": {
