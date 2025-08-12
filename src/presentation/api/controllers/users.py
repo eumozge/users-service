@@ -2,15 +2,12 @@ from typing import Annotated
 
 from app.users.commands import CreateUser
 from app.users.exceptions import UserIdAlreadyExistsError
+from di import DI
 from domain.users.exeptions import UsernameAlreadyExistsError
-from domain.users.services import UserService
 from domain.users.value_objects.username import EmptyUsernameError, TooLongUsernameError, WrongUsernameFormatError
 from fastapi import APIRouter, Depends, status
-from infra.db.main import get_sa_session_maker
-from infra.db.repositories.users import UserRepositoryImpl
-from infra.db.uow import SQLAlchemyUoW
 from mediator import Mediator
-from presentation.api.controllers.depends.mediator import get_mediator
+from presentation.api.controllers.depends.mediator import get_di, get_mediator
 from presentation.api.controllers.responses.base import ErrorResponse, OkResponse
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -32,12 +29,14 @@ router = APIRouter(prefix="/users", tags=["users"])
 )
 async def create_user(
     create_user_command: CreateUser,
+    di: Annotated[DI, Depends(get_di)],
     mediator: Annotated[Mediator, Depends(get_mediator)],
 ) -> OkResponse[None]:
-    """TODO get depends via DI or native depends."""
-    async with get_sa_session_maker(engine=mediator.di.db_engine())() as session:
-        uow = SQLAlchemyUoW(session=session)
-        user_service = UserService(user_repository=UserRepositoryImpl(session=session))
-        await mediator.handle_command(command=create_user_command, user_service=user_service, uow=uow)
+    async with di.db_session_maker()() as db_session:
+        await mediator.handle_command(
+            command=create_user_command,
+            user_service=di.user_service(user_repository=di.user_repository(session=db_session)),
+            uow=di.db_uow(session=db_session),
+        )
 
     return OkResponse(status.HTTP_201_CREATED)

@@ -3,12 +3,10 @@ from typing import Any
 
 from app.common.commands import Command, CommandDispatcher, CommandDispatcherImpl, CommandHandler, CRes
 from app.users.commands import CreateUser, CreateUserHandler
-from di import DIContainer
 
 
 @dataclass
 class Mediator:
-    di: DIContainer
     command_dispatcher: CommandDispatcher
 
     async def handle_command(self, command: Command[CRes], *args: Any, **kwargs: Any) -> CRes:
@@ -18,8 +16,8 @@ class Mediator:
         self.command_dispatcher.register_handler(command, handler)
 
 
-def init_mediator(di: DIContainer) -> Mediator:
-    return Mediator(command_dispatcher=CommandDispatcherImpl(), di=di)
+def init_mediator() -> Mediator:
+    return Mediator(command_dispatcher=CommandDispatcherImpl())
 
 
 def setup_mediator(mediator: Mediator) -> None:

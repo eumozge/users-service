@@ -2,7 +2,7 @@ from collections.abc import AsyncGenerator, Callable
 from typing import Any
 
 import pytest
-from di import DIContainer, get_container
+from di import DI, get_container
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 from mediator import init_mediator, setup_mediator
@@ -13,15 +13,15 @@ Resolver = Callable[[str], str]
 
 
 @pytest.fixture()
-async def di(db_engine: AsyncEngine) -> DIContainer:
+async def di(db_engine: AsyncEngine) -> DI:
     return get_container(db_engine)
 
 
 @pytest.fixture()
-def app(di: DIContainer) -> FastAPI:
-    mediator = init_mediator(di=di)
+def app(di: DI) -> FastAPI:
+    mediator = init_mediator()
     setup_mediator(mediator)
-    return init_api(mediator=mediator)
+    return init_api(mediator=mediator, di=di)
 
 
 @pytest.fixture()

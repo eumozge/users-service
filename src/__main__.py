@@ -17,10 +17,11 @@ async def async_main() -> None:
     logger.info("Launch app")
 
     async with get_sa_engine(settings.db.asyncurl) as db_engine:
-        mediator = init_mediator(di=get_container(db_engine=db_engine))
+        mediator = init_mediator()
         setup_mediator(mediator)
 
-        app = init_api(mediator=mediator)
+        di = get_container(db_engine=db_engine)
+        app = init_api(mediator=mediator, di=di)
 
         await run_api(app)
 

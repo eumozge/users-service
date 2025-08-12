@@ -1,6 +1,7 @@
 import logging
 
 import uvicorn
+from di import DI
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from mediator import Mediator
@@ -12,7 +13,7 @@ from settings import settings
 logger = logging.getLogger()
 
 
-def init_api(*, mediator: Mediator, debug: bool = __debug__) -> FastAPI:
+def init_api(*, mediator: Mediator, di: DI, debug: bool = __debug__) -> FastAPI:
     logger.info("Initialize API")
     app = FastAPI(
         debug=debug,
@@ -22,7 +23,7 @@ def init_api(*, mediator: Mediator, debug: bool = __debug__) -> FastAPI:
     )
     setup_middlewares(app)
     setup_controllers(app)
-    setup_providers(app, mediator)
+    setup_providers(app, mediator, di)
     return app
 
 
