@@ -1,6 +1,6 @@
 from fastapi import status
 from httpx import AsyncClient
-from presentation.api.tests.fixtures import Resolver
+from tests.api.fixtures import Resolver
 
 
 async def test(resolver: Resolver, client: AsyncClient) -> None:

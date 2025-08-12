@@ -3,9 +3,9 @@ from domain.users.entities import User
 from domain.users.events import UserCreated
 from domain.users.exeptions import UsernameAlreadyExistsError
 from domain.users.services import UserService
-from domain.users.tests.utils import DummyUserRepository
 from domain.users.value_objects.user_id import UserId
 from domain.users.value_objects.username import Username
+from tests.users.utils import DummyUserRepository
 
 
 class TestUserService:

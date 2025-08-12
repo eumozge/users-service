@@ -7,9 +7,9 @@ from domain.users.value_objects.username import Username
 from infra.db.main import get_sa_engine, get_sa_session_maker
 from infra.db.models.base import BaseModel
 from infra.db.repositories.users import UserRepositoryImpl
-from infra.db.tests.factories import AsyncSQLAlchemyModelFactory, UserFactory
 from settings import settings
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from tests.db.factories import AsyncSQLAlchemyModelFactory, UserFactory
 
 
 @pytest.fixture()

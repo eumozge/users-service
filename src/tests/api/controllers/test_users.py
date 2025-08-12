@@ -1,6 +1,6 @@
 from fastapi import status
 from httpx import AsyncClient
-from presentation.api.tests.fixtures import Resolver
+from tests.api.fixtures import Resolver
 
 
 async def test_create_user(resolver: Resolver, client: AsyncClient) -> None:
