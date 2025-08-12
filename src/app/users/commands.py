@@ -22,6 +22,7 @@ class CreateUserHandler(CommandHandler[CreateUser, UUID]):
         self.uow = uow
 
     async def __call__(self, command: CreateUser) -> UUID:
+        """TODO Add publishing of users event."""
         user_id = UserId(command.user_id)
         username = Username(command.username)
         user = await self.user_service.create_user(user_id=user_id, username=username)

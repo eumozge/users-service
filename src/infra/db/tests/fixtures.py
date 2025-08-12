@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 
 
 @pytest.fixture()
-async def engine() -> AsyncGenerator[AsyncEngine, None]:
+async def db_engine() -> AsyncGenerator[AsyncEngine, None]:
     async with get_sa_engine(settings.db.asyncurl) as engine:
         async with engine.begin() as conn:
             await conn.run_sync(BaseModel.metadata.drop_all)
@@ -26,22 +26,22 @@ async def engine() -> AsyncGenerator[AsyncEngine, None]:
 
 
 @pytest.fixture()
-async def session(engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
-    async_session = get_sa_session_maker(engine)
+async def db_session(db_engine: AsyncEngine) -> AsyncGenerator[AsyncSession, None]:
+    async_session = get_sa_session_maker(db_engine)
 
     async with async_session() as session:
         yield session
 
 
 @pytest.fixture(autouse=True)
-async def _factories(session: AsyncSession) -> None:
+async def _factories(db_session: AsyncSession) -> None:
     for cls in AsyncSQLAlchemyModelFactory.__subclasses__():
-        cls._meta.__dict__["sqlalchemy_session"] = session
+        cls._meta.__dict__["sqlalchemy_session"] = db_session
 
 
 @pytest.fixture()
-async def user_repository(session: AsyncSession) -> UserRepositoryImpl:
-    return UserRepositoryImpl(session)
+async def user_repository(db_session: AsyncSession) -> UserRepositoryImpl:
+    return UserRepositoryImpl(db_session)
 
 
 @pytest.fixture()

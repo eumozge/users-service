@@ -7,8 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 class TestUserRepositoryImpl:
     @pytest.fixture()
-    def repo(self, session: AsyncSession) -> UserRepositoryImpl:
-        return UserRepositoryImpl(session)
+    def repo(self, db_session: AsyncSession) -> UserRepositoryImpl:
+        return UserRepositoryImpl(db_session)
 
     async def test_get_user_by_id(self, repo: UserRepositoryImpl) -> None:
         """TODO Tested in `test_create_user`."""

@@ -20,20 +20,20 @@ class CommandHandler(ABC, Generic[CReq, CRes]):
 
 @dataclass(eq=False)
 class CommandDispatcher(ABC):
-    handlers: dict[type[Command], CommandHandler] = field(default_factory=dict)
+    handlers: dict[type[Command], type[CommandHandler]] = field(default_factory=dict)
 
     @abstractmethod
-    def register_handler(self, command: type[Command[CRes]], handler: CommandHandler[CReq, CRes]) -> None: ...
+    def register_handler(self, command: type[Command[CRes]], handler: type[CommandHandler[CReq, CRes]]) -> None: ...
 
     @abstractmethod
-    async def send(self, command: Command[CRes]) -> CRes: ...
+    async def send(self, command: Command[CRes], *args: Any, **kwargs: Any) -> CRes: ...
 
 
 @dataclass(eq=False)
 class CommandDispatcherImpl(CommandDispatcher):
-    def register_handler(self, command: type[Command[CRes]], handler: CommandHandler[CReq, CRes]) -> None:
+    def register_handler(self, command: type[Command[CRes]], handler: type[CommandHandler[CReq, CRes]]) -> None:
         self.handlers[command] = handler
 
-    async def send(self, command: Command[CRes]) -> CRes:
-        handler = self.handlers[command.__class__]
+    async def send(self, command: Command[CRes], *args: Any, **kwargs: Any) -> CRes:
+        handler = self.handlers[command.__class__](*args, **kwargs)
         return await handler(command)
